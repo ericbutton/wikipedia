@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Most Edited Wikipedia Pages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .page {
+            margin-bottom: 10px;
+        }
+        .page a {
+            text-decoration: none;
+            color: #1a0dab;
+        }
+    </style>
 </head>
 <body>
-    <h1>Most Edited Wikipedia Pages</h1>
+    <h1>Most Edited Wikipedia Pages Today</h1>
     <div id="content">Loading data...</div>
 
     <script>
-        fetch(`data/${new Date().toISOString().split('T')[0]}.json`)
-    .then(response => response.json())
-    .then(data => {
-        const content = document.getElementById('content');
-        content.innerHTML = '';
-        data.query.recentchanges.forEach(change => {
-            const div = document.createElement('div');
-            div.innerText = `${change.title} - Last edited at ${change.timestamp}`;
-            content.appendChild(div);
-        });
-    })
-    .catch(error => {
-        document.getElementById('content').innerText = 'Error loading data. Please try again later.';
-    });
+        const apiUrl = "https://en.wikipedia.org/w/api.php?action=query&list=mostviewed&format=json&mvlimit=30&origin=*";
 
-    </script>
-</body>
-    
-</html>
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const content = document.getElementById('content');
+                content.innerHTML = '';
+                data
