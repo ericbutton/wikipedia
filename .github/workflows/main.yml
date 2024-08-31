@@ -17,16 +17,30 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: Debug - List files in repository
+        run: ls -al
+
+      - name: Debug - Check Python version
+        run: python --version
+
+      - name: Debug - Install dependencies
         run: pip install requests
 
-      - name: Run script
-        run: python fetch_wikipedia_data.py
+      - name: Debug - Run script
+        run: |
+          echo "Running fetch_wikipedia_data.py"
+          python fetch_wikipedia_data.py
+          echo "Script completed"
+
+      - name: Debug - List files in data directory
+        run: ls -al data
 
       - name: Commit and push data
         run: |
+          echo "Starting commit process"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Actions"
           git add data/
           git commit -m "Update Wikipedia data"
           git push
+          echo "Commit and push completed"
