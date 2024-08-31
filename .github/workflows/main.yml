@@ -1,8 +1,9 @@
 name: Fetch Wikipedia Edits
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # This means the script will run daily at midnight UTC
+  push:
+    branches:
+      - main  # or your default branch
 
 jobs:
   build:
